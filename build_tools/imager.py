@@ -1,3 +1,4 @@
+from re import X
 import sys
 import shutil
 import os
@@ -20,10 +21,9 @@ def read(tag, file: IO[Any], count=0):
 
 
 def write(tag, file: IO[Any], data: bytearray, offset: int):
-    buf = read(tag, file)
-    for i in range(len(data)):
-        buf[offset + i] = data[i]
-    file.write(buf)
+    file.seek(offset)
+    size = file.write(data)
+    eprint(f'[{tag}] Write {size} (0x{size:X}) bytes at offset 0x{offset:X}')
     return
 
 
@@ -34,8 +34,8 @@ def write_to_offset(target: str, offset: int, base: str):
 
     with open(target, 'rb') as target_file:
         target_data = read('target', target_file)
-        with open(base, 'rb+') as out_file:
-            write('base', out_file, target_data, offset)
+        with open(base, 'r+b') as base_file:
+            write('base', base_file, target_data, offset)
 
 
 def main():
