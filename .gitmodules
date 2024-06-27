@@ -1,0 +1,6 @@
+[submodule "platform/u-boot"]
+	path = platform/u-boot
+	url = git@gitee.com:deleeete/u-boot.git
+[submodule "platform/rkbin"]
+	path = platform/rkbin
+	url = git@gitee.com:deleeete/u-boot.git
